@@ -1,6 +1,60 @@
 # Project candidates
 
-## 1. Ruby
+## 1. TypeScript
+
+浏览器端 Token 分析器
+
+输入一段文本，在本地完成 Token 编码，并把模型看到的内容逐层展示出来：
+
+文本
+  ↓
+Unicode 字符与 UTF-8 字节
+  ↓
+Token
+  ↓
+Token ID
+  ↓
+上下文窗口占用
+
+支持：
+
+Token 数量、ID 和原始字节展示
+Token 与原文字形的高亮对应
+字符数、字节数和 Token 数对比
+中文、Emoji、代码和不可见字符分析
+自定义上下文预算与超限提示
+完整 Token ID 序列复制
+大文本输入限制与性能基准
+全部在浏览器本地运行，不上传用户文本
+
+使用 React 构建交互界面，通过 Web Worker 在后台执行 WASM Tokenizer，避免大段文本分析
+阻塞主线程。主线程与 Worker 之间使用可辨识联合类型定义消息协议，并通过 `requestId`
+丢弃过期结果，防止快速输入时旧任务覆盖新任务。
+
+分析结果使用 Typed Array 和 transferable buffer 传递，减少跨线程复制。展示层需要正确
+处理 Unicode grapheme、UTF-8 字节边界，以及单个 Token 无法独立解码的情况。
+
+这个项目本质上是：
+
+把语言模型不可见的 Token 化过程，变成可观察、可解释、可度量的浏览器工具。
+
+重点训练：
+
+TypeScript 严格类型
+可辨识联合类型
+结构类型与依赖注入
+React 异步状态管理
+Web Worker 消息协议
+WASM 集成
+Typed Array 与 transferable buffer
+Unicode 和 UTF-8
+防抖、任务取消与竞态处理
+浏览器性能分析
+
+难度：3/5
+开源潜力：高
+
+## 2. Ruby
 LLM 测试 DSL
 
 做一个类似 RSpec 的 AI 测试框架：
@@ -44,7 +98,7 @@ Ruby 对象模型
 难度： 3.5/5
 开源潜力： 很高
 
-## 2. Python
+## 3. Python
 RAG 失败诊断器
 
 输入一次完整的 RAG 执行记录，判断错误出在哪一层：
@@ -101,11 +155,6 @@ Reranker
 数据分析
 AI 评测
 可观测性
-
-## 3. Typescript
-
-Tokenizer
-文本 → Token → Token ID → 上下文占用
 
 ## 4. Haskell
 
