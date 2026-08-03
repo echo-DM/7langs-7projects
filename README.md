@@ -16,6 +16,24 @@
 在 AI 辅助编程中，人仍然需要判断系统应该怎样拆分、边界应该放在哪里，以及哪一种工具
 最适合当前问题。
 
+## 项目主页
+
+科幻未来风的挑战主页将通过 GitHub Pages 发布：
+
+**[echo-dm.github.io/7langs-7projects](https://echo-dm.github.io/7langs-7projects/)**
+
+主页代码位于 [`site/`](./site)，本地运行：
+
+```bash
+cd site
+pnpm install
+pnpm dev
+```
+
+执行 `pnpm lint` 检查代码，执行 `pnpm build` 生成生产版本。仓库包含 GitHub Pages
+部署工作流；首次发布前，需要在仓库 Settings → Pages 中将 Source 设置为
+**GitHub Actions**，随后推送到 `main` 或手动触发 workflow。
+
 ## 七种语言，七个项目
 
 |   # | 语言       | 项目                           | 核心目标                                                  | 状态   |
