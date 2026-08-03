@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { projects, type Project } from './projects';
 import { useNarrativeMotion } from './useNarrativeMotion';
 
 const REPOSITORY_URL = 'https://github.com/echo-DM/7langs-7projects';
 const VIDEO_URL = 'https://www.bilibili.com/video/BV1fj346iEhy/';
+const currentProject = projects.find((project) => project.status === 'online') ?? projects[0];
+
+function languageStyle(project: Project) {
+  return { '--language-accent': project.accent } as CSSProperties;
+}
 
 const navItems = [
   { id: 'rules', label: '挑战规则' }, { id: 'route', label: '30 天路线' },
@@ -45,7 +50,7 @@ function Hero() {
     <div className="hero-number" aria-hidden="true">30</div>
     <div className="hero-copy" data-entrance><p className="kicker">CHALLENGE FILE № 001 · 01 / 07 ONLINE</p><h1>30 天，挑战 7 种语言，完成 7 个 AI 项目</h1><p className="hero-lead">不是课程清单，是一场有截止日期的工程实战。每种语言负责一个项目，每个项目解决一个真实的 AI 工程问题。</p><div className="hero-actions"><a className="button primary" href="#route">查看挑战路线 <Icon name="arrow" /></a><a className="text-link" href={REPOSITORY_URL} target="_blank" rel="noreferrer">GitHub ↗</a></div></div>
     <div className="formula" aria-label="30 天，7 种语言，7 个 AI 项目"><b>30 DAYS</b><span>×</span><b>7 LANGUAGES</b><span>×</span><b>7 AI PROJECTS</b></div>
-    <div className="status-scale" aria-label="七个项目中一个已完成">{projects.map((p) => <div className={p.status} key={p.id}><span>{p.order}</span><i /><small>{p.shortLanguage}</small></div>)}</div>
+    <div className="language-matrix" aria-label="七种编程语言及项目状态">{projects.map((p) => <div className={`language-chip ${p.status}`} style={languageStyle(p)} key={p.id}><span className="language-order">{p.order}</span><small>{p.status === 'online' ? 'ONLINE' : 'PLANNED'}</small><strong>{p.shortLanguage}</strong><b>{p.language}</b></div>)}</div>
   </section>;
 }
 
@@ -56,14 +61,14 @@ function Rules() {
 
 function SectionHead({ no, tag, title, text }: { no: string; tag: string; title: string; text?: string }) { return <div className="section-head" data-entrance><div><span>{no} / 04</span><b>{tag}</b></div><h2>{title}</h2>{text && <p>{text}</p>}</div>; }
 
-function Route() { return <section className="section route" id="route"><SectionHead no="02" tag="30-DAY ROUTE" title="七站路线，从可观察性走到推理底层。" text="时间表是静态作战计划；完成状态只认仓库里的真实结果。" /><div className="route-layout"><aside className="route-board"><span>CURRENT MISSION</span><strong>01</strong><b>TYPE<br />SCRIPT</b><i>ONLINE</i></aside><ol className="route-list">{projects.map(p => <li key={p.id} data-route-step className={p.status}><span className="route-day">{p.dayRange}</span><div><small>MISSION {p.order} · {p.language}</small><h3>{p.title}</h3><p>{p.challenge}</p></div><b className="route-status">{p.status === 'online' ? 'ONLINE' : 'LOCKED'}</b></li>)}</ol></div></section>; }
+function Route() { return <section className="section route" id="route"><SectionHead no="02" tag="30-DAY ROUTE" title="七站路线，从可观察性走到推理底层。" text="时间表是静态作战计划；完成状态只认仓库里的真实结果。" /><div className="route-layout"><aside className="route-board" style={languageStyle(currentProject)}><span>CURRENT MISSION</span><strong>{currentProject.order}</strong><b className="route-board-language"><span>{currentProject.shortLanguage}</span>{currentProject.language}</b><i>ONLINE</i></aside><ol className="route-list">{projects.map(p => <li key={p.id} data-route-step className={p.status} style={languageStyle(p)}><span className="route-day">{p.dayRange}</span><div><small>MISSION {p.order}</small><div className="route-language"><b>{p.shortLanguage}</b><strong>{p.language}</strong></div><h3>{p.title}</h3><p>{p.challenge}</p></div><b className="route-status">{p.status === 'online' ? 'ONLINE' : 'LOCKED'}</b></li>)}</ol></div></section>; }
 
-function ProjectCard({ project }: { readonly project: Project }) { const body = <><div className="card-top"><span>FILE {project.order}</span><b>{project.status === 'online' ? 'ONLINE' : 'TO UNLOCK'}</b></div><div className="card-title"><strong>{project.shortLanguage}</strong><div><small>{project.dayRange} / {project.language}</small><h3>{project.title}</h3></div></div><p>{project.description}</p><div className="challenge"><span>CHALLENGE OBJECTIVE</span>{project.challenge}</div><ul>{project.focus.map(x => <li key={x}>{x}</li>)}</ul>{project.repository && <span className="open-project">打开项目 <Icon name="arrow" /></span>}</>;
-  return project.repository ? <a className="project-card online" data-project-card href={project.repository} target="_blank" rel="noreferrer" aria-label={`查看 ${project.title}（在新窗口打开）`}>{body}</a> : <article className="project-card" data-project-card>{body}</article>; }
+function ProjectCard({ project }: { readonly project: Project }) { const body = <><div className="card-top"><span>FILE {project.order}</span><b>{project.status === 'online' ? 'ONLINE' : 'TO UNLOCK'}</b></div><div className="card-language"><strong>{project.shortLanguage}</strong><div><small>LANGUAGE / {project.order}</small><b>{project.language}</b></div></div><div className="card-project"><small>{project.dayRange}</small><h3>{project.title}</h3></div><p>{project.description}</p><div className="challenge"><span>CHALLENGE OBJECTIVE</span>{project.challenge}</div><ul>{project.focus.map(x => <li key={x}>{x}</li>)}</ul>{project.repository && <span className="open-project">打开项目 <Icon name="arrow" /></span>}</>;
+  return project.repository ? <a className="project-card online" style={languageStyle(project)} data-project-card href={project.repository} target="_blank" rel="noreferrer" aria-label={`查看 ${project.language} 项目 ${project.title}（在新窗口打开）`}>{body}</a> : <article className="project-card" style={languageStyle(project)} data-project-card>{body}</article>; }
 
 function Projects() { return <section className="section" id="projects"><SectionHead no="03" tag="PROJECT DOSSIERS" title="七份项目档案，一条完整能力链。" text="语言选择、项目目标与工程重点统一记录；尚未完成的项目不提前宣告成果。" /><div className="project-grid">{projects.map(p => <ProjectCard key={p.id} project={p} />)}</div></section>; }
 
-function Progress() { return <section className="section progress" id="progress"><SectionHead no="04" tag="PROGRESS REPORT" title="当前战况：第一站已上线。" /><div className="progress-panel" data-entrance><div className="progress-count"><strong>01</strong><span>/ 07<br />ONLINE</span></div><div className="progress-copy"><p>TypeScript / TokenLens 已完成。其余 6 个项目仍处于待解锁状态。</p><div className="progress-bar" aria-label="挑战进度：七个项目中完成一个"><i /></div><small>14.3% COMPLETE · STATUS BASED ON REAL OUTPUT</small></div><div className="stamp">IN<br />PROGRESS</div></div></section>; }
+function Progress() { return <section className="section progress" id="progress"><SectionHead no="04" tag="PROGRESS REPORT" title="当前战况：第一站已上线。" /><div className="progress-panel" data-entrance><div className="progress-count"><strong>01</strong><span>/ 07<br />ONLINE</span></div><div className="progress-copy"><div className="current-language" style={languageStyle(currentProject)}><strong>{currentProject.shortLanguage}</strong><span><small>CURRENT LANGUAGE</small><b>{currentProject.language}</b></span></div><p>{currentProject.language} / {currentProject.title} 已完成。其余 6 个项目仍处于待解锁状态。</p><div className="progress-bar" aria-label="挑战进度：七个项目中完成一个"><i /></div><small>14.3% COMPLETE · STATUS BASED ON REAL OUTPUT</small></div><div className="stamp">IN<br />PROGRESS</div></div></section>; }
 
 function Closing() { return <section className="closing"><span>DAY 01 → DAY 30</span><h2>路线已经画好。<br />现在，继续构建。</h2><p>在 GitHub 查看挑战仓库，或在 Bilibili 跟随完整记录。</p><div><a className="button primary" href={REPOSITORY_URL} target="_blank" rel="noreferrer"><Icon name="github" />查看挑战仓库</a><a className="button secondary" href={VIDEO_URL} target="_blank" rel="noreferrer"><Icon name="play" />观看 Bilibili</a></div></section>; }
 
