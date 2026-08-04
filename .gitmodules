@@ -1,3 +1,6 @@
 [submodule "01-ts-tokenLens"]
 	path = 01-ts-tokenLens
 	url = git@github.com:echo-DM/tokenLens.git
+[submodule "02-rb-agentExpect"]
+	path = 02-rb-agentExpect
+	url = git@github.com:echo-DM/agent-expect.git
