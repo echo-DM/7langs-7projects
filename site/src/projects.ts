@@ -1,4 +1,4 @@
-export type ProjectStatus = 'online' | 'planned';
+export type ProjectStatus = 'completed' | 'in-progress' | 'planned';
 
 export interface Project {
   readonly id: string;
@@ -27,7 +27,7 @@ export const projects: readonly Project[] = [
     description:
       '在浏览器本地拆解文本的 Token、字节与上下文预算，让模型看见的内容变得可观察。',
     focus: ['React', 'Web Worker', 'WASM'],
-    status: 'online',
+    status: 'completed',
     accent: '#61efff',
     repository: 'https://github.com/echo-DM/tokenLens',
   },
@@ -36,13 +36,13 @@ export const projects: readonly Project[] = [
     order: '02',
     language: 'Ruby',
     shortLanguage: 'RB',
-    title: '大模型测试框架',
+    title: 'AgentExpect',
     dayRange: 'Day 05–08',
     challenge: '为概率性输出设计一套可读、可扩展、能进入 CI 的测试语言。',
     description:
       '用简洁、可扩展的 DSL 描述大模型评估规则，为不确定系统建立确定性的测试接口。',
     focus: ['DSL', 'Matcher', 'CI'],
-    status: 'planned',
+    status: 'in-progress',
     accent: '#ff5e7d',
   },
   {
