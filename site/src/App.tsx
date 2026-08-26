@@ -9,11 +9,12 @@ const statusLabels: Record<Project['status'], string> = {
   'in-progress': 'IN PROGRESS',
   planned: 'PLANNED',
 };
-const currentProject = projects.find((project) => project.status === 'in-progress')
-  ?? projects.find((project) => project.status === 'completed')
-  ?? projects[0];
 const completedProjectCount = projects.filter((project) => project.status === 'completed').length;
 const inProgressProjectCount = projects.filter((project) => project.status === 'in-progress').length;
+const completedProjects = projects.filter((project) => project.status === 'completed');
+const currentProject = projects.find((project) => project.status === 'in-progress')
+  ?? completedProjects[completedProjects.length - 1]
+  ?? projects[0];
 const progressPercentage = (completedProjectCount / projects.length) * 100;
 
 function routeStatusLabel(status: Project['status']) {
@@ -86,7 +87,7 @@ function ProjectCard({ project }: { readonly project: Project }) { const body = 
 
 function Projects() { return <section className="section" id="projects"><SectionHead no="03" tag="PROJECT DOSSIERS" title="七份项目档案，一条完整能力链。" text="语言选择、项目目标与工程重点统一记录；尚未完成的项目不提前宣告成果。" /><div className="project-grid">{projects.map(p => <ProjectCard key={p.id} project={p} />)}</div></section>; }
 
-function Progress() { const remainingProjectCount = projects.length - completedProjectCount - inProgressProjectCount; return <section className="section progress" id="progress"><SectionHead no="04" tag="PROGRESS REPORT" title="当前战况：第二站进行中。" /><div className="progress-panel" data-entrance><div className="progress-count"><strong>{String(completedProjectCount).padStart(2, '0')}</strong><span>/ {String(projects.length).padStart(2, '0')}<br />COMPLETE</span></div><div className="progress-copy"><div className="current-language" style={languageStyle(currentProject)}><strong>{currentProject.shortLanguage}</strong><span><small>CURRENT PROJECT</small><b>{currentProject.title}</b></span></div><p>{currentProject.title} 正在进行中。TokenLens 已完成，其余 {remainingProjectCount} 个项目仍处于待解锁状态。</p><div className="progress-bar" aria-label={`挑战进度：${projects.length} 个项目中完成 ${completedProjectCount} 个`}><i style={{ width: `${progressPercentage}%` }} /></div><small>{progressPercentage.toFixed(1)}% COMPLETE · STATUS BASED ON REAL OUTPUT</small></div><div className="stamp">IN<br />PROGRESS</div></div></section>; }
+function Progress() { const remainingProjectCount = projects.length - completedProjectCount - inProgressProjectCount; const isInProgress = currentProject.status === 'in-progress'; return <section className="section progress" id="progress"><SectionHead no="04" tag="PROGRESS REPORT" title={isInProgress ? `当前战况：第 ${currentProject.order} 站进行中。` : `当前战况：已完成 ${completedProjectCount} 站。`} /><div className="progress-panel" data-entrance><div className="progress-count"><strong>{String(completedProjectCount).padStart(2, '0')}</strong><span>/ {String(projects.length).padStart(2, '0')}<br />COMPLETE</span></div><div className="progress-copy"><div className="current-language" style={languageStyle(currentProject)}><strong>{currentProject.shortLanguage}</strong><span><small>{isInProgress ? 'CURRENT PROJECT' : 'LATEST PROJECT'}</small><b>{currentProject.title}</b></span></div><p>{isInProgress ? `${currentProject.title} 正在进行中。` : `${currentProject.title} 已完成。`}其余 {remainingProjectCount} 个项目仍处于待解锁状态。</p><div className="progress-bar" aria-label={`挑战进度：${projects.length} 个项目中完成 ${completedProjectCount} 个`}><i style={{ width: `${progressPercentage}%` }} /></div><small>{progressPercentage.toFixed(1)}% COMPLETE · STATUS BASED ON REAL OUTPUT</small></div><div className="stamp">{isInProgress ? <>IN<br />PROGRESS</> : 'COMPLETE'}</div></div></section>; }
 
 function Closing() { return <section className="closing"><span>DAY 01 → DAY 30</span><h2>路线已经画好。<br />现在，继续构建。</h2><p>在 GitHub 查看挑战仓库，或在 Bilibili 跟随完整记录。</p><div><a className="button primary" href={REPOSITORY_URL} target="_blank" rel="noreferrer"><Icon name="github" />查看挑战仓库</a><a className="button secondary" href={VIDEO_URL} target="_blank" rel="noreferrer"><Icon name="play" />观看 Bilibili</a></div></section>; }
 

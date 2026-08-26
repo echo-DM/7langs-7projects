@@ -42,8 +42,9 @@ export const projects: readonly Project[] = [
     description:
       '用简洁、可扩展的 DSL 描述大模型评估规则，为不确定系统建立确定性的测试接口。',
     focus: ['DSL', 'Matcher', 'CI'],
-    status: 'in-progress',
+    status: 'completed',
     accent: '#ff5e7d',
+    repository: 'https://github.com/echo-DM/agent-expect',
   },
   {
     id: 'python',
