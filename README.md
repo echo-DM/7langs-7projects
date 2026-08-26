@@ -38,8 +38,8 @@ pnpm dev
 
 |   # | 语言       | 项目                           | 核心目标                                                  | 状态   |
 | --: | ---------- | ------------------------------ | --------------------------------------------------------- | ------ |
-|  01 | TypeScript | [TokenLens](./01-ts-tokenLens) | 在浏览器中可视化文本的 Token、字节和上下文预算            | 已实现 |
-|  02 | Ruby       | 大模型测试框架                 | 用简洁、可扩展的 DSL 描述大模型测试与评估规则             | 计划中 |
+|  01 | TypeScript | [TokenLens](https://github.com/echo-DM/tokenLens/) | 在浏览器中可视化输入文本的 Token            | 已实现 |
+|  02 | Ruby       | [agent-expect](https://github.com/echo-DM/agent-expect) | agent 测试框架             | 已实现 |
 |  03 | Python     | 开源项目维护 Agent             | 根据 GitHub Issue 理解代码库、完成修改并生成 Pull Request | 计划中 |
 |  04 | Haskell    | Agent 工作流验证器             | 在 Agent 运行前检查工作流是否安全、完整、合法             | 计划中 |
 |  05 | Rust       | 本地模型自动路由器             | 根据任务难度、隐私和资源情况选择本地或远程模型            | 计划中 |
