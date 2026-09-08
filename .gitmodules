@@ -4,3 +4,6 @@
 [submodule "02-rb-agentExpect"]
 	path = 02-rb-agentExpect
 	url = git@github.com:echo-DM/agent-expect.git
+[submodule "03-py-patchLoop"]
+	path = 03-py-patchLoop
+	url = git@github.com:echo-DM/patch-loop.git
