@@ -59,6 +59,7 @@ export const projects: readonly Project[] = [
     focus: ['Agent', 'Tool Use', 'GitHub'],
     status: 'completed',
     accent: '#ffe66d',
+    repository: 'https://github.com/echo-DM/patch-loop',
   },
   {
     id: 'haskell',
@@ -73,6 +74,7 @@ export const projects: readonly Project[] = [
     focus: ['GADT', 'State Machine', 'Safety'],
     status: 'completed',
     accent: '#c9a7ff',
+    repository: 'https://github.com/echo-DM/agent-gate',
   },
   {
     id: 'rust',
