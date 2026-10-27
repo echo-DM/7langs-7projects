@@ -7,3 +7,6 @@
 [submodule "03-py-patchLoop"]
 	path = 03-py-patchLoop
 	url = git@github.com:echo-DM/patch-loop.git
+[submodule "04-hs-agentGate"]
+	path = 04-hs-agentGate
+	url = git@github.com:echo-DM/agent-gate.git
