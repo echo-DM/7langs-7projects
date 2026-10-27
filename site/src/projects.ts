@@ -57,7 +57,7 @@ export const projects: readonly Project[] = [
     description:
       '从 GitHub Issue 出发理解代码库、规划修改、完成实现，并整理为可审查的 Pull Request。',
     focus: ['Agent', 'Tool Use', 'GitHub'],
-    status: 'planned',
+    status: 'completed',
     accent: '#ffe66d',
   },
   {
@@ -71,7 +71,7 @@ export const projects: readonly Project[] = [
     description:
       '通过类型与状态机，在 Agent 运行前检查工作流是否安全、完整，并阻止非法状态迁移。',
     focus: ['GADT', 'State Machine', 'Safety'],
-    status: 'planned',
+    status: 'completed',
     accent: '#c9a7ff',
   },
   {
